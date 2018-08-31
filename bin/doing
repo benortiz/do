@@ -27,19 +27,15 @@ wwid.config = config.config
 wwid.current_section = config.current_section
 wwid.default_template = config.default_template
 wwid.default_date_format = config.default_date_format
-
+taskpaper = Taskpaper.new(Localstorage.new(config).read)
 
 program_desc 'A CLI for a What Was I Doing system'
 
 default_command :recent
-# sort_help :manually
 
 desc 'Output notes if included in the template'
 default_value true
 switch [:notes], :default_value => true, :negatable => true
-
-# desc 'Wrap notes at X chars (0 for no wrap)'
-# flag [:w,:wrapwidth], :must_match => /^\d+$/, :type => Integer
 
 desc 'Specify a different doing_file'
 flag [:f, :doing_file]
@@ -65,11 +61,6 @@ command :now do |c|
   c.desc 'Note'
   c.arg_name 'note_text'
   c.flag [:n,:note]
-
-  # c.desc "Edit entry with specified app"
-  # c.arg_name 'editor_app'
-  # c.default_value wwid.config.has_key?('editor_app') && wwid.config['editor_app'] ? wwid.config['editor_app'] : false
-  # c.flag [:a,:app]
 
   c.action do |global_options,options,args|
     if options[:back]
@@ -312,11 +303,6 @@ command :done do |c|
 
   c.desc "Edit entry with #{ENV['EDITOR']}"
   c.switch [:e,:editor]
-
-  # c.desc "Edit entry with specified app"
-  # c.arg_name 'editor_app'
-  # c.default_value wwid.config.has_key?('editor_app') && wwid.config['editor_app'] ? wwid.config['editor_app'] : false
-  # c.flag [:a,:app]
 
   c.action do |global_options,options,args|
     took = 0

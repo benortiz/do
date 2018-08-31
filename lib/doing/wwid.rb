@@ -79,20 +79,18 @@ class WWID
         @content[section]['items'].push({'title' => title, 'date' => date, 'section' => section})
         current += 1
       else
-        # if content[section]['items'].length - 1 == current
-          if current == 0
-            @other_content_top.push(line)
+        if current == 0
+          @other_content_top.push(line)
+        else
+          if line =~ /^\S/
+            @other_content_bottom.push(line)
           else
-            if line =~ /^\S/
-              @other_content_bottom.push(line)
-            else
-              unless @content[section]['items'][current - 1].has_key? 'note'
-                @content[section]['items'][current - 1]['note'] = []
-              end
-              @content[section]['items'][current - 1]['note'].push(line.gsub(/ *$/,''))
+            unless @content[section]['items'][current - 1].has_key? 'note'
+              @content[section]['items'][current - 1]['note'] = []
             end
+            @content[section]['items'][current - 1]['note'].push(line.gsub(/ *$/,''))
           end
-        # end
+        end
       end
     }
   end

@@ -22,7 +22,11 @@ version Doing::VERSION
 
 wwid = WWID.new
 wwid.user_home = %x{echo $HOME}.strip
-wwid.configure
+config = Config.new
+wwid.config = config.config
+wwid.current_section = config.current_section
+wwid.default_template = config.default_template
+wwid.default_date_format = config.default_date_format
 
 
 program_desc 'A CLI for a What Was I Doing system'

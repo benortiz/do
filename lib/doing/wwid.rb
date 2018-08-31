@@ -95,17 +95,6 @@ class WWID
     }
   end
 
-  def create(filename=nil)
-    if filename.nil?
-      filename = @doing_file
-    end
-    unless File.exists?(filename) && File.stat(filename).size > 0
-      File.open(filename,'w+') do |f|
-        f.puts @current_section + ":"
-      end
-    end
-  end
-
   def fork_editor(input="")
     tmpfile = Tempfile.new('doing')
 

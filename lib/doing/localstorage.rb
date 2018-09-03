@@ -1,27 +1,33 @@
 class Localstorage
-  attr_reader :config
+  attr_accessor :config, :doing_file
 
   def initialize(config)
     self.config = config.config
   end
 
   def setup_with_config
-    doing_file = File.expand_path(config['doing_file'])
-    create(doing_file) unless File.exist?(doing_file)
-    read(doing_file)
+    self.doing_file = File.expand_path(config['doing_file'])
+    create(self.doing_file) unless File.exist?(self.doing_file)
+    read
   end
 
   def setup_with_stdin(input_file:)
-    doing_file = File.expand_path(input_file)
-    if !File.size?(doing_file) && !File.file?(doing_file) && input_file.length < 256
-      create(doing_file)
+    self.doing_file = File.expand_path(input_file)
+    if !File.size?(self.doing_file) && !File.file?(self.doing_file) && input_file.length < 256
+      create(self.doing_file)
     end
-    read(doing_file)
+    read
   end
 
-  def read(filepath)
-    doing_file = IO.read(filepath)
-    doing_file = doing_file.force_encoding('utf-8') if doing_file.respond_to? :force_encoding
+  def read
+    contents = IO.read(self.doing_file)
+    contents = contents.force_encoding('utf-8') if contents.respond_to? :force_encoding
+  end
+
+  def write(contents)
+    File.open(self.doing_file, 'w+') do |f|
+      f.puts contents
+    end
   end
 
   def create(filename)
@@ -31,6 +37,4 @@ class Localstorage
       end
     end
   end
-
-
 end

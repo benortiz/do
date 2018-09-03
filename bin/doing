@@ -27,7 +27,11 @@ wwid.config = config.config
 wwid.current_section = config.current_section
 wwid.default_template = config.default_template
 wwid.default_date_format = config.default_date_format
-taskpaper = Taskpaper.new(Localstorage.new(config).read)
+localstorage = Localstorage.new(config)
+wwid.doing_file = File.expand_path(wwid.config['doing_file'])
+localstorage.doing_file = File.expand_path(wwid.config['doing_file'])
+taskpaper = Taskpaper.new(localstorage.read)
+taskpaper.date_format = config.default_date_format
 
 program_desc 'A CLI for a What Was I Doing system'
 
@@ -71,7 +75,19 @@ command :now do |c|
       date = Time.now
     end
 
-    section = wwid.guess_section(options[:s]) || options[:s].cap_first
+    section = taskpaper.find_section(options[:s])
+
+    unless section
+      print "Create a new section called #{options[:s].cap_first} (y/N)?"
+      prompt = STDIN.gets
+      if prompt =~ /^y/i
+        taskpaper.add_section(options[:s].cap_first)
+        localstorage.write(taskpaper.to_s)
+        section = options[:s].cap_first
+      end
+    end
+
+    section ||= options[:s].cap_first
 
     if options[:e] || (args.length == 0 && STDIN.stat.size == 0)
       raise "No EDITOR variable defined in environment" if ENV['EDITOR'].nil?
@@ -1037,9 +1053,14 @@ end
 
 pre do |global,command,options,args|
   if global[:doing_file]
-    wwid.init_doing_file(global[:doing_file])
+    wwid.doing_file = File.expand_path(global[:doing_file])
+    content = localstorage.setup_with_stdin(input_file: global[:doing_file])
+    wwid.content = Taskpaper.new(content).to_h
+    # wwid.init_doing_file(global[:doing_file])
   else
-    wwid.init_doing_file
+    content = localstorage.setup_with_config
+    wwid.content = Taskpaper.new(content).to_h
+    # wwid.init_doing_file
   end
   wwid.config[:include_notes] = false unless global[:notes]
   if global[:version]

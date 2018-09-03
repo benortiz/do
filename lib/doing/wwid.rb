@@ -40,61 +40,6 @@ class WWID
     @results = []
   end
 
-  def init_doing_file(input=nil)
-    @doing_file = File.expand_path(@config['doing_file'])
-
-    if input.nil?
-      create(@doing_file) unless File.exists?(@doing_file)
-      input = IO.read(@doing_file)
-      input = input.force_encoding('utf-8') if input.respond_to? :force_encoding
-    elsif File.exists?(File.expand_path(input)) && File.file?(File.expand_path(input)) && File.stat(File.expand_path(input)).size > 0
-      @doing_file = File.expand_path(input)
-      input = IO.read(File.expand_path(input))
-      input = input.force_encoding('utf-8') if input.respond_to? :force_encoding
-    elsif input.length < 256
-      @doing_file = File.expand_path(input)
-      create(input)
-      input = IO.read(File.expand_path(input))
-      input = input.force_encoding('utf-8') if input.respond_to? :force_encoding
-    end
-
-    @other_content_top = []
-    @other_content_bottom = []
-
-    section = "Uncategorized"
-    lines = input.split(/[\n\r]/)
-    current = 0
-
-    lines.each {|line|
-      next if line =~ /^\s*$/
-      if line =~ /^(\S[\S ]+):\s*(@\S+\s*)*$/
-        section = $1
-        @content[section] = {}
-        @content[section]['original'] = line
-        @content[section]['items'] = []
-        current = 0
-      elsif line =~ /^\s*- (\d{4}-\d\d-\d\d \d\d:\d\d) \| (.*)/
-        date = Time.parse($1)
-        title = $2
-        @content[section]['items'].push({'title' => title, 'date' => date, 'section' => section})
-        current += 1
-      else
-        if current == 0
-          @other_content_top.push(line)
-        else
-          if line =~ /^\S/
-            @other_content_bottom.push(line)
-          else
-            unless @content[section]['items'][current - 1].has_key? 'note'
-              @content[section]['items'][current - 1]['note'] = []
-            end
-            @content[section]['items'][current - 1]['note'].push(line.gsub(/ *$/,''))
-          end
-        end
-      end
-    }
-  end
-
   def fork_editor(input="")
     tmpfile = Tempfile.new('doing')
 

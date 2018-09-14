@@ -1,4 +1,4 @@
-class Localstorage
+class Local
   attr_accessor :config, :doing_file
 
   def initialize(config)

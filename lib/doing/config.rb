@@ -4,7 +4,15 @@ class Config
                 :default_template,
                 :default_date_format
 
-  def initialize()
+  # Config values come from three locations, in order of least -> most
+  # precedence
+  # 1. Defaults
+  # 2. ~/.doingrc
+  # 3. current working directory .doingrc
+  def initialize
+  end
+
+  def defaults
     @default_config_file = '.doingrc'
     @timers = {}
 

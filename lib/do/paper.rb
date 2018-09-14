@@ -1,6 +1,6 @@
 require 'taskpaper'
 
-class DoingPaper < Taskpaper
+class Paper < Taskpaper
   def intialize(raw_content)
   end
 end

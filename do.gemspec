@@ -1,22 +1,16 @@
 # Ensure we require the local version and not one we might have installed already
 require File.join([File.dirname(__FILE__),'lib','doing','version.rb'])
-spec = Gem::Specification.new do |s|
-  s.name = 'doing'
-  s.version = Doing::VERSION
-  s.author = 'Brett Terpstra'
-  s.email = 'me@brettterpstra.com'
-  s.homepage = 'http://brettterpstra.com/project/doing/'
+Gem::Specification.new do |s|
+  s.name = 'do'
+  s.version = Do::VERSION
+  s.author = 'Benjamin Ortiz'
+  s.email = 'hello.ben.ortiz@gmail.com'
+  s.homepage = 'github.com/benortiz/do'
   s.platform = Gem::Platform::RUBY
-  s.summary = 'A command line tool for managing What Was I Doing reminders'
-  s.description = 'A tool for managing a TaskPaper-like file of recent activites. Perfect for the late-night hacker on too much caffeine to remember what they accomplished at 2 in the morning.'
+  s.summary = 'A command line tool for logging activity'
+  s.description = ''
   s.license = 'MIT'
-# Add your other files here if you make them
-  s.files = %w(
-bin/doing
-lib/doing/version.rb
-lib/doing.rb
-lib/doing/wwid.rb
-  )
+  s.files = Dir.glob("{bin,lib}/**/*")
   s.require_paths << 'lib'
   s.has_rdoc = true
   s.extra_rdoc_files = ['README.md']

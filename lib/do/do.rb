@@ -1,4 +1,4 @@
-module Doing
+module Do
   class << self
     def config
       @config ||= Config.new

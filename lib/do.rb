@@ -5,7 +5,6 @@ require 'pp'
 require 'csv'
 require 'tempfile'
 require 'chronic'
-require 'haml'
 require 'json'
 
 require 'do/do'

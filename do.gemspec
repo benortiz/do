@@ -1,5 +1,5 @@
 # Ensure we require the local version and not one we might have installed already
-require File.join([File.dirname(__FILE__),'lib','doing','version.rb'])
+require File.join([File.dirname(__FILE__),'lib','do','version.rb'])
 Gem::Specification.new do |s|
   s.name = 'do'
   s.version = Do::VERSION
@@ -12,13 +12,10 @@ Gem::Specification.new do |s|
   s.license = 'MIT'
   s.files = Dir.glob("{bin,lib}/**/*")
   s.require_paths << 'lib'
-  s.has_rdoc = true
-  s.extra_rdoc_files = ['README.md']
-  s.rdoc_options << '--title' << 'doing' << '--main' << 'README.md' << '--markup' << 'markdown' << '-ri'
+  s.has_rdoc = false
   s.bindir = 'bin'
   s.executables << 'doing'
   s.add_development_dependency 'rake', '~> 0'
-  s.add_development_dependency 'rdoc', '~> 4.1', '>= 4.1.1'
   s.add_runtime_dependency 'gli', '~> 2.17', '>= 2.17.1'
   s.add_runtime_dependency('chronic','~> 0.10', '>= 0.10.2')
   s.add_runtime_dependency 'deep_merge', '~> 0'

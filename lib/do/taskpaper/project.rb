@@ -2,6 +2,7 @@ class Taskpaper::Project
   PROJECT_LINE = /^(\S[\S ]+):\s*(@\S+\s*)*$/
 
   attr_accessor :tasks
+  attr_reader :name
 
   def initialize(name:)
     @name = name

@@ -1,20 +1,38 @@
 class Taskpaper::Outline
-  attr_accessor :raw_content
+  attr_accessor :projects
 
   def initialize(raw_content:)
-    self.raw_content = raw_content
+    @raw_content = raw_content
   end
 
-  # PONDER:
-  #   - Just pass the line into the other classes and have them handle the
-  #   parsing.
-  #   - Is there another way besides nil + .compact?
+  def to_s
+    projects.map(&:to_s).reduce(:+)
+  end
+
+  def find_project(name)
+    projects.detect { |project| project.name == name }
+  end
+
+  def add_project(project)
+    projects << project
+  end
+
+  def projects
+    @projects ||= to_structure
+  end
+
+  def tasks
+    projects.map(&:tasks).flatten
+  end
+
+  private
+
   # Take a StringIO and turns it into an array of Taskpaper::Projects
   def to_structure
     project = Taskpaper::Project.new(name: "Uncategorized")
     task = nil
 
-    raw_content.lines.map do |line|
+    @raw_content.lines.map do |line|
       next if line.strip.empty?
       if line =~ Taskpaper::Project::PROJECT_LINE
         project_name = $1
@@ -33,28 +51,5 @@ class Taskpaper::Outline
         nil
       end
     end.compact
-  end
-
-  # Turn the structured taskpaper into a string for writting to some storage
-  def to_s
-    to_structure.map(&:to_s).reduce(:+)
-  end
-
-  def add_project
-  end
-
-  def find_project
-  end
-
-  def projects
-  end
-
-  def add_task
-  end
-
-  def find_task
-  end
-
-  def tasks
   end
 end

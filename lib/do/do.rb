@@ -1,7 +1,8 @@
 module Do
   class << self
     def config
-      @config ||= Config.new
+      c = Config.new
+      @config ||= c.attributes
     end
   end
 end

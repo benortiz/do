@@ -15,8 +15,9 @@ class Taskpaper::Task
     "\t- #{formatted_date} | #{@description}\n#{@note.to_s}"
   end
 
+  private
+
   def formatted_date
     @date.strftime(Taskpaper.config.date_format)
   end
-
 end

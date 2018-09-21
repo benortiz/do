@@ -2,6 +2,7 @@ class Taskpaper::Task
   TASK_LINE = /^\s*- (\d{4}-\d\d-\d\d \d\d:\d\d) \| (.*)/
 
   attr_accessor :note
+  attr_reader :project, :note
 
   def initialize(project:, description:, date:)
     @project = project

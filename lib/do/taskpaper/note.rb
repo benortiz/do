@@ -1,8 +1,6 @@
 class Taskpaper::Note
   NOTE_LINE = /^\t\t([\w\s]+)/
 
-  attr_reader :lines
-
   def initialize(task:, lines: [])
     @task = task
     @lines = lines

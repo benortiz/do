@@ -13,7 +13,7 @@ describe 'Taskpaper::Note' do
     it 'appends the line to the lines array' do
       note = Taskpaper::Note.new(task: nil, lines: ['note'])
       note.add_line('note1')
-      expect(note.lines).to eq(['note', 'note1'])
+      expect(note.instance_variable_get(:@lines)).to eq(['note', 'note1'])
     end
   end
 end

@@ -8,4 +8,5 @@ module Do
 end
 
 require_relative 'version'
+require_relative 'cmd'
 require_relative 'config'

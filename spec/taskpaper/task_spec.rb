@@ -15,10 +15,4 @@ describe 'Taskpaper::Task' do
       expect(subject.to_s).to eq("\t- 2018-09-17 20:04 | something i did\n\t\tnote!")
     end
   end
-
-  describe '#formatted_date' do
-    it 'formats the date according to the config' do
-      expect(subject.formatted_date).to eq('2018-09-17 20:04')
-    end
-  end
 end

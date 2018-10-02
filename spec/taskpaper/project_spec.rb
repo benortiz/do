@@ -21,6 +21,12 @@ describe 'Taskpaper::Project' do
     end
   end
 
+  describe '#title' do
+    it 'formats the name to be a title in a taskpaper outline' do
+      expect(subject.title).to eq("Currently:")
+    end
+  end
+
   describe '#add_task' do
     it 'adds a task to the tasks array' do
       task = Taskpaper::Task.new(

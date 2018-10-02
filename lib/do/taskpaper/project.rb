@@ -10,11 +10,15 @@ class Taskpaper::Project
   end
 
   def to_s
-    output = "#{@name}:\n"
+    output = "#{title}\n"
     @tasks.each do |task|
       output += task.to_s
     end
     output
+  end
+
+  def title
+    "#{@name}:"
   end
 
   def add_task(task)

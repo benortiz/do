@@ -20,7 +20,11 @@ class Config
 
   def defaults
     {
-      wdid: '~/wdid.md',
+      storage: {
+        local: {
+          wdid: '~/wdid.md'
+        }
+      },
       default_project: 'Currently',
       date_format: '%Y-%m-%d %H:%M'
     }

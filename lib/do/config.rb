@@ -21,7 +21,7 @@ class Config
   def defaults
     {
       wdid: '~/wdid.md',
-      current_section: 'Currently',
+      default_project: 'Currently',
       date_format: '%Y-%m-%d %H:%M'
     }
   end

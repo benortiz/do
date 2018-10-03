@@ -7,7 +7,7 @@ class Taskpaper::Note
   end
 
   def to_s
-    @lines.map { |line| "\t\t#{line}" }.join("\n")
+    @lines.map { |line| "\t\t#{line}\n" }.join("")
   end
 
   def add_line(line)

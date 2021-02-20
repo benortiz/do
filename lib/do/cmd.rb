@@ -30,6 +30,9 @@ class Do::Cmd
     when :local
       Storage::Local.setup_wdid(default_project.title)
       @storage = Storage::Local
+    when :quiver
+      Storage::Quiver.setup_wdid(default_project.title)
+      @storage = Storage::Quiver
     end
   end
 

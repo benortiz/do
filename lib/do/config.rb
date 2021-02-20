@@ -1,5 +1,4 @@
 require 'ostruct'
-require 'deep_merge'
 
 class Config
   FILE_NAME = '.dorc'
@@ -9,7 +8,7 @@ class Config
   # 2. global_config  ~/.dorc
   # 3. Defaults       {}
   def initialize
-    @combined_config = defaults.deep_merge(global_config).deep_merge(local_config)
+    @combined_config = defaults.merge(global_config).merge(local_config)
   end
 
   def attributes
@@ -43,8 +42,7 @@ class Config
 
   def local_config
     local_config_file = File.expand_path(File.join(Dir.pwd, FILE_NAME))
-    if File.file?(local_config_file)
-      YAML.load_file(local_config_file)
-    end
+    return YAML.load_file(local_config_file) if File.file?(local_config_file)
+    {}
   end
 end
